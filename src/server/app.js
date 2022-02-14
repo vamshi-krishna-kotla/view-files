@@ -15,9 +15,6 @@ const PORT = process.env.PORT || 3000;
 // the current directory is the target
 let dir = process.cwd();
 
-// overwritten for testing
-dir = 'D:/BackUp/Practice/Node/node-url-monitor';
-
 // initialize the object that carries the end output
 let tree = {
 	path: dir.replace(/\\/g, '/'),
