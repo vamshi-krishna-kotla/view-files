@@ -1,15 +1,35 @@
+/**
+ * server code that reads the folder structure from current
+ * working directory and responds with a server-side rendered
+ * representation of the structure
+ */
+
+// required imports
 import express from 'express';
 import React from 'react';
 import { renderToString } from 'react-dom/server';
+
 import { default as App } from '../client/App.jsx';
 
 import fs from 'fs';
 import path from 'path';
 
+// init the server
 const app = express();
+
+// middleware to support JSON format
 app.use(express.json());
+
+/**
+ * middleware to serve the front-end static scripts
+ * 
+ * @note the server code will be bundled and put in the /dist folder
+ * where the static assets are stored too, hence we are statically
+ * serving the same directory with __dirname
+ */
 app.use(express.static(path.resolve(__dirname)));
 
+// PORT to be used for the app
 const PORT = process.env.PORT || 3000;
 
 // the current directory is the target
@@ -24,7 +44,7 @@ let tree = {
  * 
  * @param {String} path path to the directory or file
  * @param {String} key '|' separated keys to access the tree object at required depths
- * @returns 
+ * @returns no return value as this function is used to set the "tree" object
  */
 function getContents(path, key) {
 	// variable to check if content is a file or directory
@@ -119,30 +139,41 @@ function getContents(path, key) {
 // call the function
 getContents(dir, 'content');
 
+// configure GET request to serve the UI
 app.get('/', (req, res) => {
 	try {
+		// fetch the initial HTML file
 		const HTML = fs.readFileSync(path.resolve(__dirname, '../src/server', './view.html'), {
 			encoding: 'utf8'
 		});
 
+		/**
+		 * send the updated HTML
+		 */
 		res.send(HTML
+			// set the global variable for ui reference
 			.replace('$$FOLDER_TREE$$', JSON.stringify(tree))
+			// render the React components as string for SSR
 			.replace('<div id="root"></div>',
 				`<div id="root">${renderToString(<App tree={tree}/>)}</div>`)
 		);
 	} catch (error) {
+		// log the error and respond with 500 for internal issue
 		console.error(error);
 		res.status(500).send(error);
 	}
 	finally {
+		// end the response
 		res.end();
 	}
 });
 
+// instantiate and start the server
 let server = app.listen(PORT, () => {
 	console.log(`Check your folder on http://localhost:${PORT}`);
 });
 
+// close the server and exit when the process is terminated
 process.on('SIGINT', () => {
 	server.close();
 	process.exit(1);
