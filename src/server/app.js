@@ -206,6 +206,7 @@ app.get('/*', (req, res) => {
 		res.send(HTML
 			// set the global variables for ui reference
 			.replace('$$FOLDER_TREE$$', JSON.stringify(treeToSend))
+			.replace('$$MAIN_DIR_PATH$$', `'${tree.path}'`)
 			// render the React components as string for SSR
 			.replace('<div id="root"></div>',
 				`<div id="root">${renderToString(<App tree={treeToSend}/>)}</div>`)
