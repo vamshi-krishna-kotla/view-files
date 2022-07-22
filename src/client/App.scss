@@ -3,6 +3,17 @@ body {
 	padding: 0;
 }
 
+@font-face {
+    font-family: 'FontAwesome';
+    src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'),
+		url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'),
+		url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'),
+		url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'),
+		url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');
+    font-weight: normal;
+    font-style: normal
+}
+
 #app {
 	align-items: center;
 	display: flex;
@@ -13,5 +24,20 @@ body {
 		border: 1px solid black;
 		padding: 1rem;
 		margin: 1rem;
+		font-family: FontAwesome;
+
+		&.directory {
+			&:before {
+				content: "\f07c";
+				margin: 0 0.5rem;
+			}
+		}
+
+		&.file {
+			&:before {
+				content: "\f15c";
+				margin: 0 0.5rem;
+			}
+		}
 	}
 }
