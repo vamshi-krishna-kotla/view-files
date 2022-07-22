@@ -139,23 +139,76 @@ function getContents(path, key) {
 // call the function
 getContents(dir, 'content');
 
-// configure GET request to serve the UI
-app.get('/', (req, res) => {
+/**
+ * function to return the required data from the "tree" based on the
+ * child path (taken from the URL)
+ * 
+ * this function digs into the tree structure and retrives the
+ * corresponding data of the nested children at any possible depth
+ * 
+ * @param {*} path : path (or route) sent from the URL
+ * @returns tree structure retrieved from the "tree" object
+ */
+function filterTree(path) {
+	// set the initial tree structure
+	let data = tree.content.__child_nodes__, i;
+
+	// split the path based on '/' to form the depthArray
+	const pathDepthArray = path.split('/');
+
+	/**
+	 * dig into the tree
+	 * loop to the penultimate element and enter into the __child_nodes__ at each level
+	 * retrive the data at the last level without entering __child_nodes__ at the end
+	 * 
+	 * e.g. parent/child/grand-child
+	 * depthArray -> ['parent', 'child', 'grand-child']
+	 * need data at tree -> parent -> child -> grand-child
+	 * 
+	 * access data.parent.__child_nodes__.child.__child_nodes__.grand-child
+	 */
+	for(i = 0; i < pathDepthArray.length - 1; i++) {
+		data = data[pathDepthArray[i]].__child_nodes__;
+	}
+	data = data[pathDepthArray[i]];
+
+	return data;
+}
+
+/**
+ * function to remove the '/' at the end of the path for routing
+ * 
+ * @param {String} url : path that may or may not have '/' at the end
+ * @returns trimmed path after removing '/' at the end
+ */
+function parseUrl(url) {
+	let length = url.length;
+	return (url.charAt(length - 1) === '/') ? url.slice(0, length - 1) : url;
+}
+
+// configure GET request to serve the UI for any path params
+app.get('/*', (req, res) => {
 	try {
 		// fetch the initial HTML file
 		const HTML = fs.readFileSync(path.resolve(__dirname, '../src/server', './view.html'), {
 			encoding: 'utf8'
 		});
 
+		// get the route from the path
+		const requestedDir = parseUrl(req.params[0]);
+
+		// get the data to be sent to the component based on the route
+		const treeToSend = requestedDir ? filterTree(requestedDir) : tree.content;
+
 		/**
 		 * send the updated HTML
 		 */
 		res.send(HTML
-			// set the global variable for ui reference
-			.replace('$$FOLDER_TREE$$', JSON.stringify(tree))
+			// set the global variables for ui reference
+			.replace('$$FOLDER_TREE$$', JSON.stringify(treeToSend))
 			// render the React components as string for SSR
 			.replace('<div id="root"></div>',
-				`<div id="root">${renderToString(<App tree={tree}/>)}</div>`)
+				`<div id="root">${renderToString(<App tree={treeToSend}/>)}</div>`)
 		);
 	} catch (error) {
 		// log the error and respond with 500 for internal issue

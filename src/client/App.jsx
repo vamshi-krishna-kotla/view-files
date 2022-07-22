@@ -13,7 +13,7 @@ import './App.scss';
  */
 export default function App(props) {
 	// get the main child nodes of target directory
-	let children = (((props.tree || {}).content) || {}).__child_nodes__ || {};
+	let children = ((props.tree || {}) || {}).__child_nodes__ || {};
 
 	/**
 	 * function to format the JSON output coming from props (server)
