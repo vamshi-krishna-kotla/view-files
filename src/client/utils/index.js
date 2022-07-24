@@ -1,3 +1,22 @@
+import React from "react";
+import DirComp from "../components/DirComp.jsx";
+import FileComp from "../components/FileComp.jsx";
+
+/**
+ * function to generate HTML div tree from given formatted data
+ * 
+ * @param {Array} childrenTree Array format (like returned by returnFormattedChildrenTree function)
+ * @returns HTML tree structure for given directory
+ */
+export function returnChildrenTree(childrenTree) {
+    return childrenTree.map(e => {
+        if (e[1] && e[1].isDirectory) {
+            // directory
+            return <DirComp dirData={e}/>
+        }
+        return <FileComp fileData={e} />
+    });
+}
 
 /**
  * function to format the JSON output coming from server
