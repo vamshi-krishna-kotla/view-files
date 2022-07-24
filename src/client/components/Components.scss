@@ -1,0 +1,20 @@
+.directory {
+    background-color: red;
+}
+
+.file {
+    cursor: pointer;
+    position: relative;
+
+    &:hover {
+        box-shadow: 1px 1px 0.5rem 1px rgba($color: black, $alpha: 0.5);
+    }
+
+    .file-name {
+        padding: 0.5rem;
+    }
+
+    .file-details {
+        overflow: hidden;
+    }
+}

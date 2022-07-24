@@ -5,6 +5,7 @@
 import { returnChildrenTree } from '../utils/index.js';
 
 import './App.scss';
+import './components/Components.scss';
 
 /**
  * React component that takes in props and renders the HTML tree
