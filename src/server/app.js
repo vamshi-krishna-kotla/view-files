@@ -46,7 +46,7 @@ let tree = {
  * @param {String} key '|' separated keys to access the tree object at required depths
  * @returns no return value as this function is used to set the "tree" object
  */
-function getContents(path, key) {
+const getContents = (path, key) => {
 	// variable to check if content is a file or directory
 	let isDirectory = fs.lstatSync(path).isDirectory();
 
@@ -149,7 +149,7 @@ getContents(dir, 'content');
  * @param {*} path : path (or route) sent from the URL
  * @returns tree structure retrieved from the "tree" object
  */
-function filterTree(path) {
+const filterTree = (path) => {
 	// set the initial tree structure
 	let data = tree.content.__child_nodes__, i;
 
@@ -181,7 +181,7 @@ function filterTree(path) {
  * @param {String} url : path that may or may not have '/' at the end
  * @returns trimmed path after removing '/' at the end
  */
-function parseUrl(url) {
+const parseUrl = (url) => {
 	let length = url.length;
 	return (url.charAt(length - 1) === '/') ? url.slice(0, length - 1) : url;
 }
