@@ -6,7 +6,7 @@
 import React from 'react';
 import { hydrate } from 'react-dom';
 
-import { returnFormattedChildrenTree } from './utils/index.js';
+import { returnFormattedChildrenTree } from '../utils/index.js';
 
 import App from './App.jsx';
 

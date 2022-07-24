@@ -1,6 +1,6 @@
 import React from "react";
-import DirComp from "../components/DirComp.jsx";
-import FileComp from "../components/FileComp.jsx";
+import DirComp from "../client/components/DirComp.jsx";
+import FileComp from "../client/components/FileComp.jsx";
 
 /**
  * function to generate HTML div tree from given formatted data
@@ -10,7 +10,7 @@ import FileComp from "../components/FileComp.jsx";
  */
 export function returnChildrenTree(childrenTree) {
     return childrenTree.map(e => {
-        if (e[1] && e[1].isDirectory) {
+        if ((e[1] && e[1].isDirectory) || (['.git', 'node_modules'].includes(e[0]))) {
             // directory
             return <DirComp dirData={e}/>
         }

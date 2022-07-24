@@ -2,7 +2,7 @@
  * central React component to render the app
  */
 
-import { returnChildrenTree } from './utils/index.js';
+import { returnChildrenTree } from '../utils/index.js';
 
 import './App.scss';
 

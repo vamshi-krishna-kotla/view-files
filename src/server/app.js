@@ -13,7 +13,7 @@ import { default as App } from '../client/App.jsx';
 
 import fs from 'fs';
 import path from 'path';
-import { returnFormattedChildrenTree } from '../client/utils';
+import { returnFormattedChildrenTree } from '../utils';
 
 // init the server
 const app = express();
@@ -48,8 +48,11 @@ let tree = {
  * @returns no return value as this function is used to set the "tree" object
  */
 const getContents = (path, key) => {
+	// get the stats for the file or directory
+	const stats = fs.statSync(path);
+
 	// variable to check if content is a file or directory
-	let isDirectory = fs.lstatSync(path).isDirectory();
+	let isDirectory = stats.isDirectory();
 
 	// set the relative path
 	let relPath = path.slice(dir.length, path.length);
@@ -79,7 +82,7 @@ const getContents = (path, key) => {
 		 * modifyTime
 		 * changeTime
 		 */
-		let { size, atime, mtime, ctime } = fs.statSync(path);
+		let { size, atime, mtime, ctime } = stats;
 
 		// set the file stats
 		fileContentConfig = {
