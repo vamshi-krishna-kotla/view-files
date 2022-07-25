@@ -1,10 +1,33 @@
 .directory {
-    background-color: red;
+    &.open {
+        .directory-children {
+            margin-top: 1rem;
+        }
+    }
+
+    &:before {
+        content: "\f07c";
+        margin: 0 0.5rem;
+    }
+
+    &:hover:not(.open) {
+        transform: translateY(-10px);
+    }
+
+    .dir-name {
+        padding: 0.5rem;
+    }
+
+    .directory-children {
+        overflow: hidden;
+    }
 }
 
 .file {
-    cursor: pointer;
-    position: relative;
+    &:before {
+        content: "\f15c";
+        margin: 0 0.5rem;
+    }
 
     &:hover {
         box-shadow: 1px 1px 0.5rem 1px rgba($color: black, $alpha: 0.5);

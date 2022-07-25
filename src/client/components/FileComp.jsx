@@ -13,8 +13,13 @@ export default function FileComp(props) {
      */
     const detailsRef = useRef(null);
 
+    const toggle = (event) => {
+        event.stopPropagation();
+        setDisplayDetails(!displayDetails);
+    };
+
     return (
-        <div className={['content', 'file'].join(' ')} onClick={() => setDisplayDetails(!displayDetails)}>
+        <div className={['content', 'file'].join(' ')} onClick={toggle}>
             <span className="file-name">
                 {props.fileData[0]}
             </span>
@@ -31,8 +36,8 @@ export default function FileComp(props) {
                 */}
                 <p>Last accessed: {`${new Date(props.fileData[1].atime)}`}</p>
                 <p>Last modified: {`${new Date(props.fileData[1].mtime)}`}</p>
-                <p>Size: {props.fileData[1].size} kb</p>
-                <p>File type: {props.fileData[1].extension}</p>
+                <p>Size: {props.fileData[1].size} KB</p>
+                <p>File type: {props.fileData[1].extension.toUpperCase()}</p>
             </div>
         </div>
     );

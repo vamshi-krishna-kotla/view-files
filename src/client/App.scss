@@ -9,13 +9,13 @@ body {
 
 @font-face {
     font-family: 'FontAwesome';
-    src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'),
-		url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'),
-		url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'),
-		url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'),
-		url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');
+    font-style: normal;
     font-weight: normal;
-    font-style: normal
+    src: url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'),
+		url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg'),
+		url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'),
+		url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'),
+		url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2');
 }
 
 #root {
@@ -25,24 +25,16 @@ body {
 	justify-content: space-evenly;
 
 	.content {
-		border: 1px solid black;
 		border-radius: 5px;
-		padding: 1rem;
+		border: 1px solid rgba($color: gray, $alpha: 0.5);
+		cursor: pointer;
 		margin: 1rem;
-		font-family: FontAwesome;
+		font-family: system-ui;
+		padding: 1rem;
+		position: relative;
 
-		&.directory {
-			&:before {
-				content: "\f07c";
-				margin: 0 0.5rem;
-			}
-		}
-
-		&.file {
-			&:before {
-				content: "\f15c";
-				margin: 0 0.5rem;
-			}
+		&:before {
+			font-family: FontAwesome;
 		}
 	}
 }
