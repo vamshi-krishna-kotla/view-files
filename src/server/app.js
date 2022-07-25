@@ -194,7 +194,7 @@ const parseUrl = (url) => {
 app.get('/*', (req, res) => {
 	try {
 		// fetch the initial HTML file
-		const HTML = fs.readFileSync(path.resolve(__dirname, '../src/server', './view.html'), {
+		const HTML = fs.readFileSync(path.resolve(__dirname, '../view.html'), {
 			encoding: 'utf8'
 		});
 
