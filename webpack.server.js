@@ -1,4 +1,5 @@
 const path = require('path');
+const { BannerPlugin } = require('webpack');
 
 module.exports = {
 	entry: './src/server/app.js',
@@ -26,5 +27,9 @@ module.exports = {
 				use: 'ignore-loader'
 			},
 		]
-	}
+	},
+	plugins: [
+		// use the banner plugin to add a shebang to the build file so that it can be triggered from CLI
+		new BannerPlugin({banner: '#!/usr/bin/env node', raw: true})
+	]
 }

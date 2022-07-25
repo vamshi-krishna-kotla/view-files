@@ -10,6 +10,9 @@
     "start": "node ./dist/server",
     "watch": "concurrently 'node ./src/watch' 'nodemon ./dist/server'"
   },
+  "bin": {
+    "view-dir": "dist/server.js"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
