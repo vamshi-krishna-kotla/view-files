@@ -13,9 +13,6 @@
   "bin": {
     "view-dir": "dist/server.js"
   },
-  "files": [
-    "dist/*"
-  ],
   "keywords": [],
   "author": "",
   "license": "ISC",
