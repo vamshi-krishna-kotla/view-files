@@ -11,7 +11,7 @@
     "watch": "concurrently 'node ./src/watch' 'nodemon ./dist/server'"
   },
   "bin": {
-    "view-dir": "dist/server.js"
+    "view-files": "dist/server.js"
   },
   "keywords": [],
   "author": "",
