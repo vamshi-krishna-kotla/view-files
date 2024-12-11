@@ -3,7 +3,8 @@
 ## Description
 An npm package to display the details of contents of a directory on the browser
 
-Link: https://www.npmjs.com/package/view-files
+NPM Registry: https://www.npmjs.com/package/view-files
+GitHub: https://github.com/vamshi-krishna-kotla/view-files
 
 ## Usage:
 1. Install the package `npm i view-files`
@@ -23,8 +24,6 @@ Or
     - size
     - last accessed time
     - last modified time
-    - file type
-4. Directories present in the '.gitignore' file are restricted to be entered
 
 ## KPIs:
 1. Custom [Webpack](https://webpack.js.org/) configuration for server and client
