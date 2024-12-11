@@ -8,7 +8,7 @@
     "build:server": "webpack --config webpack.server.js",
     "build": "npm run build:server && npm run build:client",
     "start": "node ./dist/server",
-    "watch": "concurrently 'node ./src/watch' 'nodemon ./dist/server'"
+    "watch": "npx concurrently \"node src/watch\" \"nodemon dist/server\""
   },
   "bin": {
     "view-files": "dist/server.js"
@@ -25,10 +25,10 @@
     "css-loader": "^6.6.0",
     "express": "^4.17.2",
     "ignore-loader": "^0.1.2",
-    "node-sass": "^7.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router": "^6.2.1",
+    "sass": "^1.82.0",
     "sass-loader": "^12.4.0",
     "style-loader": "^3.3.1",
     "webpack": "^5.68.0",
