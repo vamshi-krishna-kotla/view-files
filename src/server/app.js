@@ -42,6 +42,23 @@ let tree = {
 };
 
 /**
+ * function to format the size of the file
+ * @param {Number} size numeric value of size of any file 
+ * @returns {String} formatted size with appropriate units
+ */
+const getFormattedSize = (size) => {
+	let i = 0;
+	const byteUnits = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+	while (size > 1024) {
+		size /= 1024;
+		i++;
+	}
+
+	return `${Math.max(size, 0.1).toFixed(1)} ${byteUnits[i]}`;
+}
+
+/**
  * 
  * @param {String} path path to the directory or file
  * @param {String} key '|' separated keys to access the tree object at required depths
@@ -86,7 +103,7 @@ const getContents = (path, key) => {
 
 		// set the file stats
 		fileContentConfig = {
-			size,
+			size: getFormattedSize(size), // size is returned in bytes ref: https://nodejs.org/api/fs.html#statssize
 			atime,
 			mtime,
 			ctime,

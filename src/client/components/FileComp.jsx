@@ -36,7 +36,7 @@ export default function FileComp(props) {
                 */}
                 <p>Last accessed: {`${new Date(props.fileData[1].atime)}`}</p>
                 <p>Last modified: {`${new Date(props.fileData[1].mtime)}`}</p>
-                <p>Size: {props.fileData[1].size} KB</p>
+                <p>Size: {props.fileData[1].size}</p>
                 <p>File type: {props.fileData[1].extension.toUpperCase()}</p>
             </div>
         </div>
