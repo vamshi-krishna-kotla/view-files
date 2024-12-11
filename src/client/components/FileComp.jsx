@@ -20,9 +20,10 @@ export default function FileComp(props) {
 
     return (
         <div className={['content', 'file'].join(' ')} onClick={toggle}>
-            <span className="file-name">
-                {props.fileData[0]}
-            </span>
+            <div className="file-name">
+                <span>{props.fileData[0]}</span>
+                <span>{!displayDetails ? props.fileData[1].size : ''}</span>
+            </div>
             <div className="file-details" ref={detailsRef} style={{height: displayDetails ? detailsRef.current.scrollHeight : '0'}}>
                 {/* 
                     @note
@@ -37,7 +38,6 @@ export default function FileComp(props) {
                 <p>Last accessed: {`${new Date(props.fileData[1].atime)}`}</p>
                 <p>Last modified: {`${new Date(props.fileData[1].mtime)}`}</p>
                 <p>Size: {props.fileData[1].size}</p>
-                <p>File type: {props.fileData[1].extension.toUpperCase()}</p>
             </div>
         </div>
     );

@@ -1,5 +1,5 @@
 ## Proposed Updates
-
+- show file size in collapsed format as well
 - Remove file extension field as the filename already has it
 - use dynamic routes (this increase the speed of accessing and computing only selected targets)
     - DO NOT precompute the directory tree when the server is started

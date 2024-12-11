@@ -105,9 +105,7 @@ const getContents = (path, key) => {
 		fileContentConfig = {
 			size: getFormattedSize(size), // size is returned in bytes ref: https://nodejs.org/api/fs.html#statssize
 			atime,
-			mtime,
-			ctime,
-			extension: path.slice(path.lastIndexOf('.') + 1, path.length)
+			mtime
 		};
 	}
 
