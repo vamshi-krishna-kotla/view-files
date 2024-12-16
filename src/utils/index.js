@@ -53,3 +53,21 @@ export function returnFormattedChildrenTree(parent) {
     });
     return childrenNodes;
 }
+
+
+/**
+ * function to format the size of the file
+ * @param {Number} size numeric value of size of any file 
+ * @returns {String} formatted size with appropriate units
+ */
+export const getFormattedSize = (size) => {
+   let i = 0;
+   const byteUnits = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+   while (size > 1024) {
+       size /= 1024;
+       i++;
+   }
+
+   return `${Math.max(size, 0.1).toFixed(1)} ${byteUnits[i]}`;
+}

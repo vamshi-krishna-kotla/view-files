@@ -8,14 +8,10 @@
 	<title>Document</title>
 	<script>
 		/*
-			<FOLDER_TREE> is replaced with the folder structe JSON tree
-			from the server
+			$$children$$ is replaced with array of child files/directories
+			of the requested path
 		*/
-		window.folderTree = $$FOLDER_TREE$$;
-		/*
-			<MAIN_DIR_PATH> is replaced with the directory path from where the command is triggered
-		*/
-		window.mainDirPath = $$MAIN_DIR_PATH$$;
+		window.__children__ = $$children$$;
 	</script>
 </head>
 
