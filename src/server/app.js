@@ -7,13 +7,12 @@
 // required imports
 import express from 'express';
 import React from 'react';
-import { renderToString } from 'react-dom/server';
-
-import { default as App } from '../client/App.jsx';
-
 import fs from 'fs';
 import path from 'path';
+import { renderToString } from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
+
+import { default as App } from '../client/App.jsx';
 
 // init the server
 const app = express();
@@ -50,69 +49,69 @@ const getFormattedSize = (size) => {
 	return `${Math.max(size, 0.1).toFixed(1)} ${byteUnits[i]}`;
 }
 
-app.get('/favicon.ico', (req, res) => {
-	res.status(200).end();
-});
-
+/**
+ * middleware to serve the API response for "/api" route
+ * responds to all requests with "/api" prefix in the URL
+ * used to generate the required info for a specific path from the target directory
+ */
 app.use('/api', (req, res) => {
 	const filePath = process.cwd() + req.url;
-	
-	fs.stat(filePath, (err, stats) => {
-		if (err) {
-			return res.status(500).send('Internal Server Error').end();
-		} else {
-			const isDirectory = stats.isDirectory();
-			const size = getFormattedSize(stats.size);
-			const name = path.basename(filePath);
-			const parent = path.dirname(filePath);
-			const children = isDirectory ? fs.readdirSync(filePath) : [];
-			res.json({
-				name,
-				size,
-				isDirectory,
-				parent,
-				filePath,
-				children
-			});
-		}
-	});
+
+	try {
+		const stats = fs.statSync(filePath);
+		const isDirectory = stats.isDirectory();
+		const size = getFormattedSize(stats.size);
+		const name = path.basename(filePath);
+		const parent = path.dirname(filePath);
+		const children = isDirectory ? fs.readdirSync(filePath) : [];
+
+		res.status(200).json({
+			name,
+			size,
+			isDirectory,
+			parent,
+			filePath,
+			children
+		}).end();
+	} catch (error) {
+		res.status(500).send({ error, message: 'Internal Server Error', success: false }).end();
+	}
 });
 
+/**
+ * route to serve the SSR content for any requested path
+ * renders the HTML with React app for requested path from target directory
+ */
 app.get('*', (req, res) => {
-	let children = [];
+	try {
+		let children = [], SSR_HTML = '';
 
-	// fetch the initial HTML file
-	const HTML = fs.readFileSync(path.resolve(__dirname, '../view.html'), {
-		encoding: 'utf8'
-	});
+		// fetch the initial HTML file
+		const HTML = fs.readFileSync(path.resolve(__dirname, '../view.html'), {
+			encoding: 'utf8'
+		});
 
-	fs.stat(process.cwd() + req.url, (err, stats) => {
-		if (err) {
-			return res.status(500).send('Internal Server Error').end();
-		} else {
-			if (stats.isDirectory()) {
-				children = fs.readdirSync(process.cwd() + req.url);
-			}
-
-			/**
-			 * send the updated HTML
-			 */
-			res.send(HTML
-				.replace('$$children$$', JSON.stringify(children))
-				// render the React components as string for SSR
-				.replace('<div id="root"></div>',
-					`<div id="root">
-						${renderToString(
-							<StaticRouter
-								location={req.url}
-							>
-								<App route={req.url} children={children}/>
-							</StaticRouter>
-						)}
-					</div>`)
-			).end();
+		const stats = fs.statSync(process.cwd() + req.url);
+		if (stats.isDirectory()) {
+			children = fs.readdirSync(process.cwd() + req.url);
 		}
-	});
+
+		// render the React components as string for SSR
+		SSR_HTML = HTML
+					.replace('$$children$$', JSON.stringify(children))
+					.replace('<div id="root"></div>',
+						`<div id="root">
+							${renderToString(
+								<StaticRouter location={req.url}>
+									<App route={req.url} children={children}/>
+								</StaticRouter>
+							)}
+						</div>`);
+
+		res.status(200).contentType('text/html').send(SSR_HTML).end();
+	} catch (error) {
+		res.status(500).send({ error, message: 'Internal Server Error', success: false }).end();
+	}
 });
 
 // instantiate and start the server

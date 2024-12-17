@@ -5,9 +5,9 @@
 // required imports
 import React from 'react';
 import { hydrate } from 'react-dom';
+import { BrowserRouter } from 'react-router-dom';
 
 import App from './App.jsx';
-import { BrowserRouter } from 'react-router-dom';
 
 // get target div
 const root = document.querySelector('#root');
@@ -16,4 +16,9 @@ const root = document.querySelector('#root');
 let children = window.__children__ || [];
 
 // hydrate the app as the app is server-side rendered
-hydrate(<BrowserRouter><App route={window.location.pathname} children={children}/></BrowserRouter>, root);
+hydrate(
+    <BrowserRouter>
+        <App route={window.location.pathname} children={children}/>
+    </BrowserRouter>,
+    root
+);

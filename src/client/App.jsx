@@ -3,6 +3,7 @@
  */
 import React, { useEffect, useState } from 'react';
 import { Link, Route, Switch } from 'react-router-dom';
+
 import './App.scss';
 
 /**
@@ -11,8 +12,10 @@ import './App.scss';
  * @returns no return value
  */
 export default function App(props) {
+	// initiate "children" state variable for rendering the children of the current directory
 	let [children, setChildren] = useState([]);
 
+	// fetch the children of the current directory if not available
 	useEffect(() => {
 		if (props.children && props.children.length) {
 			setChildren(props.children);
@@ -28,14 +31,16 @@ export default function App(props) {
 				});
 		}
 	}, []);
-	// return the HTML generated after filtering the JSON output from props
+
 	return (
 		<>
 		<div className='content'>
 			{
+				// render the content for received children data
 				children.map((child, index) => {
 					return (
 						<div key={'child_' + index} className="child">
+							{/* generate dynamic routes for each child */}
 							<Link to={`${props.route}${child}/`}>{child}</Link>
 						</div>
 					);
@@ -44,6 +49,7 @@ export default function App(props) {
 		</div>
 		<Switch>
 			{
+				// generate dynamic routes renderer for each child route
 				children.map((child, index) => {
 					return (
 						<Route path={`${props.route}${child}/`} key={'route_' + index}>
