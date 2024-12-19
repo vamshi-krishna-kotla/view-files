@@ -60,20 +60,20 @@ app.use('/api', (req, res) => {
 	try {
 		const stats = fs.statSync(filePath);
 		const isDirectory = stats.isDirectory();
-		const size = getFormattedSize(stats.size);
-		const name = path.basename(filePath);
-		const parent = path.dirname(filePath);
-		const children = isDirectory ? fs.readdirSync(filePath) : [];
 
 		res.status(200).json({
-			name,
-			size,
 			isDirectory,
-			parent,
+			name: path.basename(filePath),
+			parent: path.dirname(filePath),
+			children: isDirectory ? fs.readdirSync(filePath) : [],
+			size: getFormattedSize(stats.size),
 			filePath,
-			children
+			birthTime: stats.birthtimeMs,
+			modifiedTime: stats.mtimeMs,
+			lastAccessed: stats.atimeMs,
 		}).end();
 	} catch (error) {
+		console.error(error);
 		res.status(500).send({ error, message: 'Internal Server Error', success: false }).end();
 	}
 });
@@ -110,6 +110,7 @@ app.get('*', (req, res) => {
 
 		res.status(200).contentType('text/html').send(SSR_HTML).end();
 	} catch (error) {
+		console.error(error);
 		res.status(500).send({ error, message: 'Internal Server Error', success: false }).end();
 	}
 });
