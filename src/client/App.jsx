@@ -12,18 +12,23 @@ import './App.scss';
  * @returns no return value
  */
 export default function App(props) {
-	// initiate "children" state variable for rendering the children of the current directory
-	let [children, setChildren] = useState([]);
+	// flag to check if children are available for current path
+	const areChildrenAvailable = (props.children && props.children.length);
+
+	// initiatialize "children" state variable for rendering the children of the current directory
+	let [children, setChildren] = useState(areChildrenAvailable ? props.children : []);
+	// initiatialize "fileAttrs" state variable for rendering the file details of a file
+	let [fileAttrs, setFileAttrs] = useState({});
 
 	// fetch the children of the current directory if not available
 	useEffect(() => {
-		if (props.children && props.children.length) {
-			setChildren(props.children);
-		} else {
+		if (!areChildrenAvailable) {
 			fetch(`/api${props.route}`)
 				.then(res => res.json())
 				.then(data => {
 					setChildren(data.children);
+					delete data.children;
+					setFileAttrs(data);
 				})
 				.catch(err => {
 					setChildren([]);
@@ -31,6 +36,19 @@ export default function App(props) {
 				});
 		}
 	}, []);
+
+	/**
+	 * function to get the formatted date-time string from milliseconds
+	 * @param {Number} milliseconds time in milliseconds
+	 */
+	function getDateTimeString(milliseconds) {
+		if (milliseconds && typeof milliseconds === 'number') {
+			const newDate = new Date(milliseconds);
+			return `${newDate.toDateString()} ${newDate.toLocaleTimeString()}`;
+		}
+
+		return '';
+	}
 
 	return (
 		<>
@@ -45,6 +63,19 @@ export default function App(props) {
 						</div>
 					);
 				})
+			}
+			{
+				// render the file details if children are not available and target is a file (not directory)
+				!children.length && !fileAttrs.isDirectory && (
+					<div className="file-details">
+						<h3>{fileAttrs.name}</h3>
+						<p>Size: {fileAttrs.size}</p>
+						<p>Path: {fileAttrs.filePath}</p>
+						<p>Created: {getDateTimeString(fileAttrs.birthTime)}</p>
+						<p>Modified: {getDateTimeString(fileAttrs.modifiedTime)}</p>
+						<p>Last Accessed: {getDateTimeString(fileAttrs.lastAccessed)}</p>
+					</div>
+				)
 			}
 		</div>
 		<Switch>
