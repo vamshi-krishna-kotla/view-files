@@ -99,6 +99,7 @@ app.get('*', (req, res) => {
 		// render the React components as string for SSR
 		SSR_HTML = HTML
 					.replace('$$children$$', JSON.stringify(children))
+					.replace('$$target_dir$$', process.cwd().replace(/\\/g, '/'))
 					.replace('<div id="root"></div>',
 						`<div id="root">
 							${renderToString(

@@ -4,7 +4,7 @@
 - ~~use dynamic routes (this increase the speed of accessing and computing only selected targets)~~
     - ~~DO NOT precompute the directory tree when the server is started~~
     - ~~when a directory is opened then based on the path, fetch its children~~
-- when a file is clicked then retrieve its attributes
+- ~~when a file is clicked then retrieve its attributes~~
 - update styles
 
 ### Optional
