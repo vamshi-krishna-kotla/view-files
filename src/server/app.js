@@ -50,6 +50,19 @@ const getFormattedSize = (size) => {
 }
 
 /**
+ * route to serve the favicon file
+ */
+app.get('/favicon.ico', (req, res) => {
+	try {
+		// send favicon file as response
+		res.status(200).sendFile(path.resolve(__dirname, '../favicon.ico'));
+	} catch (error) {
+		// send server error status
+		res.status(500).send();
+	}
+});
+
+/**
  * middleware to serve the API response for "/api" route
  * responds to all requests with "/api" prefix in the URL
  * used to generate the required info for a specific path from the target directory
