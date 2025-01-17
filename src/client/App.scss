@@ -19,15 +19,14 @@ body {
 }
 
 #root {
-	align-items: center;
+	align-items: start;
 	display: flex;
-	flex-direction: column;
-	justify-content: space-evenly;
+	justify-content: start;
 
 	.content {
+		animation: popout 0.2s linear 0s forwards;
 		border-radius: 5px;
 		border: 1px solid rgba($color: gray, $alpha: 0.5);
-		cursor: pointer;
 		margin: 1rem;
 		font-family: system-ui;
 		padding: 1rem;
@@ -36,5 +35,25 @@ body {
 		&:before {
 			font-family: FontAwesome;
 		}
+
+		.child > a {
+			color: rgb(53 53 198);
+			text-decoration: none;
+
+			&:visited {
+				color: rgb(53 53 198);
+				outline: none;
+			}
+		}
+	}
+}
+
+@keyframes popout {
+	0% {
+		transform: scale(0);
+	}
+
+	100% {
+		transform: scale(1);
 	}
 }

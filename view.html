@@ -5,21 +5,17 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Document</title>
+	<title>View Files</title>
 	<script>
-		/*
-			<FOLDER_TREE> is replaced with the folder structe JSON tree
-			from the server
-		*/
-		window.folderTree = $$FOLDER_TREE$$;
-		/*
-			<MAIN_DIR_PATH> is replaced with the directory path from where the command is triggered
-		*/
-		window.mainDirPath = $$MAIN_DIR_PATH$$;
+		// placeholder for array of child files/directories of the requested path
+		window.__children__ = $$children$$;
 	</script>
 </head>
 
 <body>
+	<!-- header text indicating target directory -->
+	<h1>$$target_dir$$</h1>
+
 	<!-- placeholder target div -->
 	<div id="root"></div>
 
