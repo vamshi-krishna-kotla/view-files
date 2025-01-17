@@ -5,7 +5,7 @@
     - ~~DO NOT precompute the directory tree when the server is started~~
     - ~~when a directory is opened then based on the path, fetch its children~~
 - ~~when a file is clicked then retrieve its attributes~~
-- update styles
+- ~~update styles~~
 
 ### Optional
 - take inputs from terminal about which folders to exclude (or include)

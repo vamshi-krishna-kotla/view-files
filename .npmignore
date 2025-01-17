@@ -7,3 +7,7 @@ package-lock.json
 
 webpack.client.js
 webpack.server.js
+
+proposed-updates.md
+
+.npmignore
