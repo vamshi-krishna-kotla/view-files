@@ -69,11 +69,11 @@ export default function App(props) {
 				!children.length && !fileAttrs.isDirectory && (
 					<div className="file-details">
 						<h3>{fileAttrs.name}</h3>
-						<p>Size: {fileAttrs.size}</p>
-						<p>Path: {fileAttrs.filePath}</p>
-						<p>Created: {getDateTimeString(fileAttrs.birthTime)}</p>
-						<p>Modified: {getDateTimeString(fileAttrs.modifiedTime)}</p>
-						<p>Last Accessed: {getDateTimeString(fileAttrs.lastAccessed)}</p>
+						<p><strong>Size: </strong>{fileAttrs.size}</p>
+						<p><strong>Path: </strong>{(fileAttrs?.filePath || '').replace(/\\/g, '/')}</p>
+						<p><strong>Created: </strong>{getDateTimeString(fileAttrs.birthTime)}</p>
+						<p><strong>Modified: </strong>{getDateTimeString(fileAttrs.modifiedTime)}</p>
+						<p><strong>Last Accessed: </strong>{getDateTimeString(fileAttrs.lastAccessed)}</p>
 					</div>
 				)
 			}
